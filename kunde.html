@@ -21,32 +21,40 @@ h1{
   font-size:32px;
 }
 
+/* Abschnitte */
 .section{
   margin-top:15px;
 }
 
+/* Einheitliche Kacheln */
 .menu-item{
-  background:#ffe0b2;
-  padding:12px;
-  margin:8px;
+  background:#ffe0b2;   /* gelb */
   border-radius:12px;
-  font-size:18px;
+  width:160px;           /* feste Breite */
+  height:180px;          /* feste Höhe */
+  margin:8px;
   display:inline-block;
-  width:160px;
   vertical-align:top;
-}
-
-.menu-item img{
-  width:100px;
-  height:auto;
-  margin-bottom:5px;
-}
-
-.menu-item p{
-  margin:0;
+  text-align:center;
+  box-sizing:border-box;
+  padding:10px;
   font-size:16px;
   font-weight:bold;
   color:#333;
+}
+
+/* Bilder gleich groß */
+.menu-item img{
+  width:80px;
+  height:80px;
+  object-fit:contain;  /* skaliert Bilder gleichmäßig */
+  margin-bottom:8px;
+}
+
+/* Text unter Bild */
+.menu-item p{
+  margin:0;
+  font-size:16px;
 }
 </style>
 </head>
