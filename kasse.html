@@ -4,39 +4,55 @@
 <meta charset="UTF-8">
 <title>Kasse</title>
 <link rel="icon" href="favicon.png">
+
 <style>
 body{
-font-family:Arial;
-text-align:center;
-background:#f2f2f2;
+  font-family:Arial;
+  text-align:center;
+  background:#f2f2f2;
 }
+
 button{
-font-size:28px;
-padding:20px;
-margin:20px;
-width:320px;
-height:120px;
+  font-size:28px;
+  padding:20px;
+  margin:20px;
+  width:320px;
+  height:120px;
 }
+
 #popup{
-display:none;
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:white;
-padding:40px;
-border-radius:15px;
-box-shadow:0 0 20px rgba(0,0,0,0.3);
-text-align:left;
+  display:none;
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:white;
+  padding:40px;
+  border-radius:15px;
+  box-shadow:0 0 20px rgba(0,0,0,0.3);
+  text-align:center;
 }
-#popup label{
-display:block;
-margin:10px 0;
-font-size:20px;
+
+#popup .extra{
+  display:block;
+  background:#ffe0b2;
+  border-radius:10px;
+  margin:10px auto;
+  padding:20px;
+  font-size:22px;
+  width:200px;
+  cursor:pointer;
+  user-select:none;
+}
+
+#popup .extra.selected{
+  background:#d35400;
+  color:white;
 }
 </style>
 </head>
 <body>
+
 <h1>🧾 Kasse</h1>
 
 <button onclick="openPopup('Pommes klein')">Pommes klein</button>
@@ -44,9 +60,11 @@ font-size:20px;
 
 <div id="popup">
 <h2 id="title"></h2>
-<label><input type="checkbox" id="mayo"> Mayonnaise</label>
-<label><input type="checkbox" id="ketchup"> Ketchup</label>
-<label><input type="checkbox" id="sosse"> Pommes Soße</label>
+
+<div id="extra-mayo" class="extra" onclick="toggleExtra('mayo')">Mayonnaise</div>
+<div id="extra-ketchup" class="extra" onclick="toggleExtra('ketchup')">Ketchup</div>
+<div id="extra-sosse" class="extra" onclick="toggleExtra('sosse')">Pommes Soße</div>
+
 <br>
 <button onclick="sendOrder()">Bestellen</button>
 <button onclick="closePopup()">Abbrechen</button>
@@ -54,28 +72,44 @@ font-size:20px;
 
 <script>
 let currentItem=""
+let selectedExtras = {}
+
 function openPopup(item){
-currentItem=item
-document.getElementById("title").innerText=item
-document.getElementById("popup").style.display="block"
+  currentItem=item
+  document.getElementById("title").innerText=item
+  document.getElementById("popup").style.display="block"
+  // Reset Auswahl
+  selectedExtras = {}
+  document.querySelectorAll('#popup .extra').forEach(e=>{
+    e.classList.remove('selected')
+  })
 }
+
 function closePopup(){
-document.getElementById("popup").style.display="none"
-document.getElementById("mayo").checked=false
-document.getElementById("ketchup").checked=false
-document.getElementById("sosse").checked=false
+  document.getElementById("popup").style.display="none"
 }
+
+function toggleExtra(extra){
+  selectedExtras[extra] = !selectedExtras[extra]
+  const el = document.getElementById("extra-"+extra)
+  if(selectedExtras[extra]){
+    el.classList.add('selected')
+  } else {
+    el.classList.remove('selected')
+  }
+}
+
 function sendOrder(){
-let extras=[]
-if(document.getElementById("mayo").checked) extras.push("Mayo")
-if(document.getElementById("ketchup").checked) extras.push("Ketchup")
-if(document.getElementById("sosse").checked) extras.push("Pommessoße")
-let orders = JSON.parse(localStorage.getItem("orders")) || []
-orders.push({item:currentItem,extras:extras,id:Date.now()})
-localStorage.setItem("orders",JSON.stringify(orders))
-document.getElementById("popup").style.display="none"
+  let extras=[]
+  if(selectedExtras['mayo']) extras.push("Mayo")
+  if(selectedExtras['ketchup']) extras.push("Ketchup")
+  if(selectedExtras['sosse']) extras.push("Pommessoße")
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || []
+  orders.push({item:currentItem, extras:extras, id:Date.now()})
+  localStorage.setItem("orders", JSON.stringify(orders))
+  closePopup()
 }
 </script>
 </body>
 </html>
- 
