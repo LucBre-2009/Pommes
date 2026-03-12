@@ -3,60 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <title>Pommes System</title>
-
+<link rel="icon" href="favicon.png">
 <style>
 body{
 font-family:Arial;
 text-align:center;
+padding-top:120px;
 background:#f4f4f4;
-padding-top:100px;
 }
-
 button{
-font-size:24px;
-padding:20px;
-margin:20px;
-width:250px;
+font-size:30px;
+padding:25px;
+margin:30px;
+width:300px;
 }
 </style>
-
 </head>
-
 <body>
-
-<h1>Pommes Bestellsystem</h1>
-<h2>Wer bist du?</h2>
-
-<button onclick="setRole('kasse')">🧾 Kassierer</button>
-<button onclick="setRole('kueche')">🍟 Küche</button>
+<h1>🍟 Pommes Bestellsystem</h1>
+<h2>Bitte auswählen</h2>
+<button onclick="setRole('kasse')">🧾 Kasse</button>
+<button onclick="setRole('kueche')">👨‍🍳 Küche</button>
+<button onclick="setRole('kunde')">👀 Kunde</button>
 
 <script>
-
 let role = localStorage.getItem("role")
-
-if(role === "kasse"){
-window.location.href = "kasse.html"
-}
-
-if(role === "kueche"){
-window.location.href = "kueche.html"
-}
+if(role === "kasse") location.href="kasse.html"
+if(role === "kueche") location.href="kueche.html"
+if(role === "kunde") location.href="kunde.html"
 
 function setRole(r){
-
-localStorage.setItem("role", r)
-
-if(r === "kasse"){
-window.location.href = "kasse.html"
+localStorage.setItem("role",r)
+if(r==="kasse") location.href="kasse.html"
+if(r==="kueche") location.href="kueche.html"
+if(r==="kunde") location.href="kunde.html"
 }
-
-if(r === "kueche"){
-window.location.href = "kueche.html"
-}
-
-}
-
 </script>
-
 </body>
 </html>
