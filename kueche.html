@@ -3,86 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <title>Küche</title>
-
+<link rel="icon" href="favicon.png">
 <style>
-
 body{
 font-family:Arial;
 background:#222;
 color:white;
 text-align:center;
 }
-
 .order{
 background:#333;
 margin:20px;
 padding:25px;
-font-size:28px;
+font-size:26px;
+border-radius:10px;
 }
-
 button{
-font-size:20px;
+font-size:18px;
 padding:10px;
 margin-top:10px;
 }
-
 </style>
-
 </head>
-
 <body>
-
-<h1>Küche</h1>
-
+<h1>👨‍🍳 Küche</h1>
 <div id="orders"></div>
 
 <script>
-
 function loadOrders(){
-
 let orders = JSON.parse(localStorage.getItem("orders")) || []
-
 let container = document.getElementById("orders")
-
 container.innerHTML=""
-
-orders.forEach(o=>{
-
+orders.forEach(order=>{
 let div=document.createElement("div")
 div.className="order"
-
-let extras = ""
-
-if(o.extras.length>0){
-extras = "<br>Extras: "+o.extras.join(", ")
-}
-
-div.innerHTML =
-o.item +
-extras +
-"<br><button onclick='finish("+o.id+")'>Fertig</button>"
-
+let extras=""
+if(order.extras.length>0) extras="<br>Extras: "+order.extras.join(", ")
+div.innerHTML=order.item+extras+"<br><button onclick='finish("+order.id+")'>Fertig</button>"
 container.appendChild(div)
-
 })
-
 }
-
 function finish(id){
-
 let orders = JSON.parse(localStorage.getItem("orders")) || []
-
-orders = orders.filter(o=>o.id !== id)
-
+orders = orders.filter(o=>o.id!==id)
 localStorage.setItem("orders",JSON.stringify(orders))
-
 loadOrders()
-
 }
-
 setInterval(loadOrders,1000)
-
 </script>
-
 </body>
 </html>
