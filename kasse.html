@@ -5,28 +5,35 @@
 <title>Kasse</title>
 
 <style>
+
 body{
-font-family: Arial;
+font-family:Arial;
 text-align:center;
-background:#f4f4f4;
+background:#f2f2f2;
 }
 
 button{
-font-size:20px;
-padding:20px;
-margin:10px;
-width:200px;
+font-size:30px;
+padding:25px;
+margin:20px;
+width:300px;
 }
 
-#extras{
+#popup{
 display:none;
-background:white;
-padding:20px;
-border:2px solid black;
 position:fixed;
 top:30%;
-left:40%;
+left:50%;
+transform:translate(-50%,-50%);
+background:white;
+padding:30px;
+border:3px solid black;
 }
+
+label{
+font-size:22px;
+}
+
 </style>
 </head>
 
@@ -34,71 +41,61 @@ left:40%;
 
 <h1>Kasse</h1>
 
-<button onclick="bestellen('Pommes klein')">Pommes klein</button>
-<button onclick="bestellen('Pommes groß')">Pommes groß</button>
+<button onclick="openExtras('Pommes klein')">Pommes klein</button>
+<button onclick="openExtras('Pommes groß')">Pommes groß</button>
 
-<br><br>
+<div id="popup">
 
-<button onclick="extrasPopup()">Extras</button>
-
-<div id="extras">
-<h3>Extras</h3>
+<h2 id="itemTitle"></h2>
 
 <label><input type="checkbox" id="mayo"> Mayonnaise</label><br>
 <label><input type="checkbox" id="ketchup"> Ketchup</label><br>
-<label><input type="checkbox" id="pommessoße"> Pommessoße</label><br><br>
+<label><input type="checkbox" id="sosse"> Pommessoße</label><br><br>
 
-<button onclick="bestellungMitExtras()">Bestellen</button>
-<button onclick="closeExtras()">Abbrechen</button>
+<button onclick="sendOrder()">Bestellen</button>
+<button onclick="closePopup()">Abbrechen</button>
+
 </div>
 
 <script>
 
-function extrasPopup(){
-document.getElementById("extras").style.display="block"
-}
+let currentItem = ""
 
-function closeExtras(){
-document.getElementById("extras").style.display="none"
-}
+function openExtras(item){
 
-function bestellen(item){
+currentItem = item
 
-let orders = JSON.parse(localStorage.getItem("orders")) || []
+document.getElementById("itemTitle").innerText = item
 
-orders.push({
-item:item,
-extras:[],
-time:Date.now()
-})
-
-localStorage.setItem("orders", JSON.stringify(orders))
-
-alert("Bestellung gesendet")
+document.getElementById("popup").style.display = "block"
 
 }
 
-function bestellungMitExtras(){
+function closePopup(){
+
+document.getElementById("popup").style.display = "none"
+
+}
+
+function sendOrder(){
 
 let extras=[]
 
-if(document.getElementById("mayo").checked) extras.push("Mayo")
-if(document.getElementById("ketchup").checked) extras.push("Ketchup")
-if(document.getElementById("pommessoße").checked) extras.push("Pommessoße")
+if(mayo.checked) extras.push("Mayo")
+if(ketchup.checked) extras.push("Ketchup")
+if(sosse.checked) extras.push("Pommessoße")
 
 let orders = JSON.parse(localStorage.getItem("orders")) || []
 
 orders.push({
-item:"Pommes",
+item:currentItem,
 extras:extras,
-time:Date.now()
+id:Date.now()
 })
 
-localStorage.setItem("orders", JSON.stringify(orders))
+localStorage.setItem("orders",JSON.stringify(orders))
 
-closeExtras()
-
-alert("Bestellung gesendet")
+closePopup()
 
 }
 
