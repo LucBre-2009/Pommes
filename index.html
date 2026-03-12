@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pommes System</title>
+
+<style>
+body{
+font-family:Arial;
+text-align:center;
+background:#f4f4f4;
+padding-top:100px;
+}
+
+button{
+font-size:24px;
+padding:20px;
+margin:20px;
+width:250px;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>Pommes Bestellsystem</h1>
+<h2>Wer bist du?</h2>
+
+<button onclick="setRole('kasse')">🧾 Kassierer</button>
+<button onclick="setRole('kueche')">🍟 Küche</button>
+
+<script>
+
+let role = localStorage.getItem("role")
+
+if(role === "kasse"){
+window.location.href = "kasse.html"
+}
+
+if(role === "kueche"){
+window.location.href = "kueche.html"
+}
+
+function setRole(r){
+
+localStorage.setItem("role", r)
+
+if(r === "kasse"){
+window.location.href = "kasse.html"
+}
+
+if(r === "kueche"){
+window.location.href = "kueche.html"
+}
+
+}
+
+</script>
+
+</body>
+</html>
