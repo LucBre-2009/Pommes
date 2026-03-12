@@ -96,7 +96,7 @@ button{
 
 <br>
 <button onclick="sendOrder()">Bestellen</button>
-<button onclick="closePopup()">Abbrechen</button>
+<button onclick="cancelOrder()">Abbrechen</button>
 </div>
 
 <!-- Bestellnummer Fenster -->
@@ -114,6 +114,7 @@ function openPopup(item){
   currentItem=item
   document.getElementById("title").innerText=item
   document.getElementById("popup").style.display="block"
+  // Extras zurücksetzen
   selectedExtras = {}
   document.querySelectorAll('#popup .extra').forEach(e=>e.classList.remove('selected'))
 }
@@ -160,6 +161,15 @@ function sendOrder(){
   // Bestellnummer anzeigen
   document.getElementById("orderNumberText").innerText = "Bestellnummer: " + orderNumber
   document.getElementById("numberPopup").style.display="block"
+}
+
+// Abbrechen-Button Funktion
+function cancelOrder(){
+  // Popup schließen
+  document.getElementById("popup").style.display="none"
+  // Extras zurücksetzen
+  selectedExtras = {}
+  document.querySelectorAll('#popup .extra').forEach(e=>e.classList.remove('selected'))
 }
 
 // Bestellnummer Fenster schließen
