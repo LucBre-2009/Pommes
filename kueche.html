@@ -15,9 +15,15 @@ text-align:center;
 
 .order{
 background:#333;
-padding:20px;
-margin:10px;
-font-size:22px;
+margin:20px;
+padding:25px;
+font-size:28px;
+}
+
+button{
+font-size:20px;
+padding:10px;
+margin-top:10px;
 }
 
 </style>
@@ -40,22 +46,37 @@ let container = document.getElementById("orders")
 
 container.innerHTML=""
 
-orders.forEach(o => {
+orders.forEach(o=>{
 
-let div = document.createElement("div")
+let div=document.createElement("div")
 div.className="order"
 
 let extras = ""
 
 if(o.extras.length>0){
-extras = " | Extras: " + o.extras.join(", ")
+extras = "<br>Extras: "+o.extras.join(", ")
 }
 
-div.innerHTML = o.item + extras
+div.innerHTML =
+o.item +
+extras +
+"<br><button onclick='finish("+o.id+")'>Fertig</button>"
 
 container.appendChild(div)
 
 })
+
+}
+
+function finish(id){
+
+let orders = JSON.parse(localStorage.getItem("orders")) || []
+
+orders = orders.filter(o=>o.id !== id)
+
+localStorage.setItem("orders",JSON.stringify(orders))
+
+loadOrders()
 
 }
 
